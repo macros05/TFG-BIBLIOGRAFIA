@@ -1,0 +1,99 @@
+.sidenav-container {
+  height: 100vh;
+  background-color: #f4f6f8;
+  color: white; /* color por defecto */
+}
+
+/* Toolbar fija */
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #004976;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar */
+.app-sidenav {
+  width: 320px;
+  background-color: #004976;
+  color: white;
+}
+
+/* Marca */
+.brand {
+  font-weight: bold;
+  font-size: 1.4rem;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+  color: white;
+}
+
+/* Espaciador */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Contenido principal */
+.main-content {
+  padding: 1.5rem;
+  background-color: #004976; /* cambiado de blanco a azul */
+  color: white; /* texto blanco */
+}
+
+/* Botones */
+button.mat-raised-button {
+  background-color: #F6BE00;
+  color: #004976;
+  font-weight: bold;
+}
+
+button.mat-raised-button:hover {
+  background-color: #e0ac00;
+}
+
+/* Texto blanco en el sidebar */
+mat-nav-list a.mat-list-item {
+  color: white !important;
+  display: flex;
+  align-items: center;
+}
+
+mat-nav-list a.mat-list-item .mat-icon,
+mat-nav-list a.mat-list-item .mat-line,
+mat-nav-list a.mat-list-item span {
+  color: white !important;
+}
+
+mat-sidenav mat-toolbar,
+mat-sidenav {
+  background-color: #004976 !important;
+  color: white !important;
+}
+
+/* Hover efecto */
+mat-sidenav .mat-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Forzar texto blanco en todo */
+body, .mat-body, .mat-typography, p, h1, h2, h3, h4, h5, h6, span, div {
+  color: white !important;
+}
+
+mat-nav-list a.mat-list-item mat-icon {
+  color: white !important;
+  fill: white !important;
+  font-size: 22px;
+  margin-right: 8px;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+mat-nav-list a.mat-list-item:hover,
+mat-nav-list a.mat-list-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #F6BE00;
+  font-weight: bold;
+}

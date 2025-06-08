@@ -1,0 +1,78 @@
+<h2 class="admin-title">Registrar nuevo usuario</h2>
+
+<form (ngSubmit)="editando ? guardarEdicionUsuario() : onSubmit()" #form="ngForm" class="admin-form">
+  <div class="form-fields">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput name="username" [(ngModel)]="newUser.username" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" [(ngModel)]="newUser.email" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" name="password" [(ngModel)]="newUser.password" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Rol</mat-label>
+      <mat-select name="rol_id" [(ngModel)]="newUser.rol_id" required>
+        <mat-option [value]="1">Administrador</mat-option>
+        <mat-option [value]="2">Usuario</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="admin-buttons">
+    <button mat-raised-button [ngStyle]="{ 'background-color': '#004976', color: 'white' }" type="submit">
+      {{ editando ? 'Actualizar' : 'Registrar' }}
+    </button>
+    <button mat-button type="button" *ngIf="editando" (click)="cancelarEdicion()">Cancelar</button>
+  </div>
+</form>
+
+<hr class="divider" />
+
+<h3 class="admin-subtitle">Usuarios registrados</h3>
+
+<table mat-table [dataSource]="usuarios" class="mat-elevation-z2 user-table">
+
+  <!-- Username -->
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef>Usuario</th>
+    <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+  </ng-container>
+
+  <!-- Email -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+  </ng-container>
+
+  <!-- Rol -->
+  <ng-container matColumnDef="rol_id">
+    <th mat-header-cell *matHeaderCellDef>Rol</th>
+    <td mat-cell *matCellDef="let user">
+      {{ user.rol_id === 1 ? 'Administrador' : 'Usuario' }}
+    </td>
+  </ng-container>
+
+  <!-- Acciones -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let user">
+      <button mat-stroked-button [ngStyle]="{ 'background-color': '#F6BE00', color: 'black', marginRight: '10px' }"
+      (click)="editarUsuario(user)">
+      <mat-icon>edit</mat-icon>  Editar</button>
+      <button mat-stroked-button [ngStyle]="{ 'background-color': '#ff0f0f', color: 'black'}"
+      (click)="eliminarUsuario(user.id)">
+      <mat-icon>cancel</mat-icon> Eliminar</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['username', 'email', 'rol_id', 'acciones']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['username', 'email', 'rol_id', 'acciones'];"></tr>
+</table>

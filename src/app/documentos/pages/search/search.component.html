@@ -1,0 +1,208 @@
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <mat-card class="search-card">
+        <mat-card-header class="text-center mb-4">
+          <mat-card-title>
+            <img src="assets/logo-azul.png" alt="Logo TecnoAmbiente" style="max-height: 60px;" />
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="filter-box">
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Título</mat-label>
+              <input matInput [(ngModel)]="tituloBuscado" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca título">
+              <mat-icon matSuffix>title</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Autor</mat-label>
+              <input matInput [(ngModel)]="autorBuscado" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca autor">
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Familia</mat-label>
+              <input matInput [(ngModel)]="familiaBuscada" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca familia">
+              <mat-icon matSuffix>eco</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Género</mat-label>
+              <input matInput [(ngModel)]="generoBuscado" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca género">
+              <mat-icon matSuffix>biotech</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Especie</mat-label>
+              <input matInput [(ngModel)]="especieBuscada" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca especie">
+              <mat-icon matSuffix>pets</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Palabras clave</mat-label>
+              <input matInput [(ngModel)]="palabrasClaveBuscadas" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca palabras clave">
+              <mat-icon matSuffix>label</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Distribución</mat-label>
+              <input matInput [(ngModel)]="distribucionBuscada" (ngModelChange)="onFiltroChange()"
+                placeholder="Introduzca distribución">
+              <mat-icon matSuffix>map</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="search-btn">
+            <button mat-raised-button [ngStyle]="{ 'background-color': '#004976', color: 'white' }" (click)="buscar()">
+              <mat-icon [ngStyle]="{ color: 'white' }">search</mat-icon>Buscar
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <div *ngIf="isLoading" class="text-center my-4">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger mt-3">
+        <mat-icon>error</mat-icon>{{ error }}
+      </div>
+
+      <div *ngIf="!isLoading && documentos.length > 0" class="results-container mt-4">
+        <h3>
+          <mat-icon>description</mat-icon>
+          Resultados ({{ documentos.length }} de {{ total }})
+        </h3>
+
+        <mat-card *ngFor="let doc of documentos; trackBy: trackById" class="result-card">
+          <mat-card-header>
+            <mat-card-title>{{ doc.titulo }}</mat-card-title>
+            <mat-card-subtitle>
+              <mat-icon>person</mat-icon>{{ doc.autores }} ({{ doc.anio }})
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p><mat-icon>label</mat-icon><strong>Palabras clave:</strong> {{ doc.palabras_clave }}</p>
+
+            <div *ngIf="doc.especies?.length; else noEspecies">
+              <mat-list>
+                <mat-list-item *ngFor="let esp of doc.especies">
+                  <mat-icon matListIcon>eco</mat-icon>
+                  <p><strong>Familia:</strong> {{ esp.familia || '-' }} &nbsp;|&nbsp;
+                    <strong>Género:</strong> {{ esp.genero || '-' }} &nbsp;|&nbsp;
+                    <strong>Especie:</strong> {{ esp.especie || '-' }} &nbsp;|&nbsp;
+                    <strong>Distribución:</strong> {{ esp.distribucion || '-' }}
+                  </p>
+                </mat-list-item>
+              </mat-list>
+            </div>
+
+            <ng-template #noEspecies>
+              <p><mat-icon>eco</mat-icon><strong>Especies:</strong> No especificadas</p>
+            </ng-template>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-raised-button [ngStyle]="{ 'background-color': '#004976', color: 'white' }"
+              (click)="abrirPdf(doc.ruta_pdf)">
+              <mat-icon [ngStyle]="{ color: 'white' }">picture_as_pdf</mat-icon> Ver PDF
+            </button>
+            <button mat-raised-button [ngStyle]="{ 'background-color': '#F6BE00', color: 'black' }"
+              (click)="editarDocumento(doc)">
+              <mat-icon [ngStyle]="{ color: 'white' }">edit</mat-icon> Editar
+            </button>
+          </mat-card-actions>
+
+
+          <!-- SOLO FORMULARIO DENTRO DEL MISMO CARD SI ESTA EN EDICIÓN -->
+          <div *ngIf="documentoEnEdicion?.id === doc.id" class="edit-form mt-3">
+            <h4><mat-icon>edit</mat-icon> Editar Documento</h4>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Título</mat-label>
+              <input matInput [(ngModel)]="documentoEnEdicion.titulo">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Autores</mat-label>
+              <input matInput [(ngModel)]="documentoEnEdicion.autores">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Año</mat-label>
+              <input matInput [(ngModel)]="documentoEnEdicion.anio">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Palabras clave</mat-label>
+              <textarea matInput rows="2" [(ngModel)]="documentoEnEdicion.palabras_clave"></textarea>
+            </mat-form-field>
+
+
+            <!-- 🐟 Edición manual de especies -->
+            <div class="especies-edit-form mt-4">
+              <h4><mat-icon>eco</mat-icon> Especies</h4>
+
+              <div *ngFor="let especie of especiesRelacionadas; let i = index" class="especie-row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Familia</mat-label>
+                  <input matInput [(ngModel)]="especie.familia">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Género</mat-label>
+                  <input matInput [(ngModel)]="especie.genero">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Especie</mat-label>
+                  <input matInput [(ngModel)]="especie.especie">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Distribución</mat-label>
+                  <input matInput [(ngModel)]="especie.distribucion">
+                </mat-form-field>
+
+                <button mat-icon-button color="warn" (click)="eliminarEspecie(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+
+              <div class="text-center mt-3">
+                <button mat-raised-button [ngStyle]="{ 'background-color': '#004976', color: 'white' }" (click)="agregarEspecie()">
+                  <mat-icon [ngStyle]="{ color: 'white' }">add </mat-icon> Añadir especie
+                </button>
+              </div>
+            </div>
+
+            <div class="text-center mt-3">
+              <button mat-raised-button [ngStyle]="{ 'background-color': '#F6BE00', color: 'black', marginRight: '10px' }"
+               (click)="guardarCambios()">Guardar Cambios
+              </button>
+              <button mat-raised-button color="warn" (click)="cancelarEdicion()">
+                Cancelar</button>
+            </div>
+          </div>
+
+        </mat-card>
+
+        <div *ngIf="isLoadingMore" class="text-center my-4">
+          <mat-spinner diameter="30"></mat-spinner>
+        </div>
+
+        <div *ngIf="noMoreResults" class="text-center text-muted my-3">
+          <mat-icon>check_circle</mat-icon> Todos los resultados han sido cargados.
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && documentos.length === 0" class="alert alert-info mt-3">
+        <mat-icon>info</mat-icon>No se encontraron documentos con los filtros aplicados.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Asegúrate de que el CSS esté en el archivo styles.css o en un archivo CSS global -->

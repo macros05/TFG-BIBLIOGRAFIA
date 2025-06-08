@@ -1,0 +1,100 @@
+/* Estilo base */
+html, body {
+  min-height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #004976 !important; /* Fondo azul para toda la app */
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Layout principal */
+.main-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #004976;
+  color: white;
+  height: 100vh;
+  transition: width 0.3s ease;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.sidebar.collapsed {
+  width: 60px !important;
+}
+
+/* Contenido principal */
+.content {
+  flex-grow: 1;
+  padding: 1.5rem;
+  transition: margin-left 0.3s ease;
+  margin-left: 220px;
+  background-color: transparent; /* Fondo transparente para heredar el azul */
+  color: white;
+}
+
+/* Ajuste para contenido con sidebar colapsado */
+.sidebar-collapsed {
+  margin-left: 60px !important;
+}
+
+/* Botones personalizados */
+button {
+  background-color: #F6BE00; /* Amarillo Tecnoambiente */
+  color: #004976;
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #e0ac00;
+}
+
+/* Títulos destacados */
+h1, h2, h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+  color: white;
+}
+
+/* Mat-card o componentes blancos por defecto */
+mat-card {
+  background-color: #004976 !important;
+  color: white !important;
+}
+
+/* Evita que otros contenedores sobreescriban el fondo */
+app-root, .sidenav-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: transparent !important;
+}
+
+/* Contenido renderizado desde router-outlet */
+router-outlet + * {
+  background-color: transparent !important;
+  color: white;
+}
+
+.custom-snackbar {
+  font-size: 18px; /* más grande el texto */
+  padding: 20px; /* más grande el espacio */
+  min-width: 300px; /* ancho mínimo */
+  max-width: 600px; /* opcionalmente un máximo */
+  background-color: #004976; /* color de fondo opcional */
+  color: white; /* color de texto opcional */
+  border-radius: 8px; /* bordes más redondeados */
+}

@@ -1,0 +1,69 @@
+.admin-title {
+  font-size: 1.8rem;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+body {
+  background-color: #004976;
+}
+.admin-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.admin-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.divider {
+  margin: 2rem 0;
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.admin-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+  background-color: #004976;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.user-table {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-table th {
+  background-color: #004976;
+  color: white;
+  font-weight: bold;
+}
+
+.user-table td {
+  color: #333;
+}
+
+button[mat-stroked-button] {
+  margin-right: 0.5rem;
+}

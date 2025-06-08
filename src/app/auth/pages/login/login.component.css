@@ -1,0 +1,79 @@
+
+/* Tarjeta blanca con texto oscuro */
+.card {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 4rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.container {
+  width: 100vw;
+}
+/* Título */
+h3 {
+  color: #0B4875;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+/* Campos */
+mat-form-field {
+  width: 100%;
+}
+
+/* Input: texto oscuro */
+input {
+  color: #000000;
+}
+
+/* Placeholder: oscuro */
+::placeholder {
+  color: #333333 !important;
+  opacity: 1;
+}
+
+/* Etiquetas */
+mat-label {
+  color: #0B4875 !important;
+}
+
+/* Botón */
+button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #F6BE00;
+  color: #004976;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background-color: #e0ac00;
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.login-error {
+  color: #dc3545;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}

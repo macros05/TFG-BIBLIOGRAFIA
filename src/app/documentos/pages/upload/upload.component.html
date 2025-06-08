@@ -1,0 +1,38 @@
+<section class="upload">
+  <h1>Subir documentos PDF</h1>
+
+  <form (submit)="subirPDFs(); $event.preventDefault()">
+    <label for="archivo">Selecciona uno o varios archivos PDF:</label>
+    <input
+      type="file"
+      id="archivo"
+      name="archivo"
+      (change)="onArchivosSeleccionados($event)"
+      accept="application/pdf"
+      multiple
+      style="color: #000000"
+    />
+
+    <ul *ngIf="archivos.length > 0">
+      <li *ngFor="let archivo of archivos">{{ archivo.name }}</li>
+    </ul>
+
+    <button type="submit">Subir</button>
+  </form>
+  <div *ngIf="procesadosCorrectamente.length > 0">
+    <h3>✅ Procesados correctamente:</h3>
+    <ul>
+      <li *ngFor="let archivo of procesadosCorrectamente">{{ archivo }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="erroresProcesamiento.length > 0">
+    <h3>❌ Errores de procesamiento:</h3>
+    <ul>
+      <li *ngFor="let e of erroresProcesamiento">
+        {{ e.archivo }} — {{ e.error }}
+      </li>
+    </ul>
+  </div>
+
+</section>
